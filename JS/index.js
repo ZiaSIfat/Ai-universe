@@ -102,9 +102,9 @@ const displayToolDetail = (tools) => {
     <div class='flex-1 ml-5 '>
     <h1 class='text-xl font-bold'>Integrations</h1>
     <ul class='list-disc p-3'>
-    <li>FB Messenger</li>
-    <li>Slack</li>
-    <li>Telegram</li>
+    <li>${tool.integrations[0]}</li>
+    <li>${tool.integrations[1]}</li>
+    <li>${tool.integrations[2]}</li>
     </ul>
     </div>
     </div>
@@ -113,7 +113,7 @@ const displayToolDetail = (tools) => {
     const div2 = document.createElement('div');
     div2.classList = 'flex-1';
     div2.innerHTML= `
-    <img src="${tool.image}" />
+    <img src="${tool.logo}" />
     
     `
 
