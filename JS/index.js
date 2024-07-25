@@ -49,7 +49,7 @@ const displayData = (tools,isShowAll) => {
         <h2 class='text-2xl font-bold'>${tool.name}</h2>
         <p><i class="fa-solid fa-calendar-week"></i>${tool.published_in}</p>
         <div class="card-actions justify-end">
-      <button onclick="my_modal_1.showModal()" class="btn btn-primary rounded"><i class="fa-solid fa-arrow-right"></i></button>
+      <button onclick="handleToolDetail('${tool.id}')" class="btn btn-primary rounded"><i class="fa-solid fa-arrow-right"></i></button>
     </div>
       </div>
         
@@ -60,8 +60,67 @@ const displayData = (tools,isShowAll) => {
     }
 }
 
-const handleToolDetail = () => {
-  fetch('')
+const handleToolDetail = (id) => {
+  fetch(`https://openapi.programming-hero.com/api/ai/tool/${id}`)
+  .then(res => res.json())
+  .then(data =>displayToolDetail(data))
+}
+
+const displayToolDetail = (tools) => {
+    // console.log(tools);
+    const tool = tools.data;
+    console.log(tool.pricing[0].plan);
+    const modalContainer = document.getElementById('modal-container');
+    modalContainer.innerHTML = '';
+    const div1 = document.createElement('div');
+    div1.classList = 'bg-red-100 border border-red-400 text-black p-10 rounded-lg my-10 flex-1'
+    div1.innerHTML = `
+    <p class='mb-2 font-bold'>${tool.description}</p>
+    <div class='flex gap-5'>
+    <div class='flex-1 text-center bg-white p-3 rounded-lg text-green-500'>
+    <p class='font-bold'>${tool.pricing[0].plan}</p>
+    <p>${tool.pricing[0].price}</p>
+    </div>
+    <div class='flex-1 text-center bg-white p-3 rounded-lg text-orange-500'>
+    <p class='font-bold'>${tool.pricing[1].plan}</p>
+    <p>${tool.pricing[1].price}</p>
+    </div>
+    <div class='flex-1 text-center bg-white p-3 rounded-lg text-red-500'>
+    <p class='font-bold'>${tool.pricing[2].plan}</p>
+    <p>${tool.pricing[2].price}</p>
+    </div>
+    </div>
+    <div class='flex mt-3 '>
+    <div class='flex-1'>
+    <h1 class='text-xl font-bold'>Features</h1>
+    <ul class='list-disc p-3'>
+    <li>${tool.features[1].feature_name}</li>
+    <li>${tool.features[2].feature_name}</li>
+    <li>${tool.features[3].feature_name}</li>
+    </ul>
+    </div>
+    <div class='flex-1 ml-5 '>
+    <h1 class='text-xl font-bold'>Integrations</h1>
+    <ul class='list-disc p-3'>
+    <li>FB Messenger</li>
+    <li>Slack</li>
+    <li>Telegram</li>
+    </ul>
+    </div>
+    </div>
+    `;
+
+    const div2 = document.createElement('div');
+    div2.classList = 'flex-1';
+    div2.innerHTML= `
+    <img src="${tool.image}" />
+    
+    `
+
+    modalContainer.appendChild(div1);
+    modalContainer.appendChild(div2);
+    my_modal_1.showModal();
+
 }
 
 const isShowAll = () =>{
